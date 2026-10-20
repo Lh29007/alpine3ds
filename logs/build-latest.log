@@ -1,0 +1,9 @@
+=== alpine3ds build ===
+commit  : 8064dda19460f1c7637c12e8d2be696b91ce8c2b
+date    : 2026-10-20 12:07:21 UTC
+status  : success
+========================
+
+arm-none-eabi-gcc -g -Wall -O2 -mword-relocations -ffunction-sections -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft -I/opt/devkitpro/portlibs/3ds/include -I/opt/devkitpro/libctru/include -I/__w/alpine3ds/alpine3ds/build -D__3DS__ -c source/main.c -o build/main.o
+arm-none-eabi-gcc -specs=3dsx.specs -g -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft -L/opt/devkitpro/portlibs/3ds/lib -L/opt/devkitpro/libctru/lib build/main.o -lcitro2d -lcitro3d -lctru -lm -o alpine3ds.elf
+3dsxtool alpine3ds.elf alpine3ds.3dsx
