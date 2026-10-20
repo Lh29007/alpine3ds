@@ -1,0 +1,31 @@
+#!/bin/sh
+# fetch : resume systeme facon screenfetch, POSIX sh uniquement (busybox).
+
+os=$(. /etc/os-release 2>/dev/null; echo "${PRETTY_NAME:-inconnu}")
+kernel=$(uname -r)
+arch=$(uname -m)
+host=$(cat /proc/sys/kernel/hostname 2>/dev/null || echo alpine3ds)
+shell=$(basename "${SHELL:-/bin/sh}")
+
+cpu=$(awk -F': *' '/^(model name|Processor|cpu model)/ {print $2; exit}' /proc/cpuinfo 2>/dev/null)
+[ -n "$cpu" ] || cpu="ARM11 (inconnu)"
+ncpu=$(grep -c '^processor' /proc/cpuinfo 2>/dev/null)
+[ -n "$ncpu" ] || ncpu=1
+
+mem_total=$(awk '/^MemTotal:/ {print int($2/1024)}' /proc/meminfo 2>/dev/null)
+mem_free=$(awk '/^MemAvailable:/ {print int($2/1024)}' /proc/meminfo 2>/dev/null)
+[ -n "$mem_free" ] || mem_free=$(awk '/^MemFree:/ {print int($2/1024)}' /proc/meminfo 2>/dev/null)
+
+uptime_s=$(awk '{print int($1)}' /proc/uptime 2>/dev/null)
+uptime_s=${uptime_s:-0}
+up="$((uptime_s / 3600))h $(( (uptime_s % 3600) / 60 ))m"
+
+echo "root@$host"
+echo "-----------"
+echo "OS      : $os"
+echo "Kernel  : $kernel ($arch)"
+echo "Uptime  : $up"
+echo "Shell   : $shell"
+echo "CPU     : $cpu x$ncpu"
+echo "Memoire : ${mem_free:-?} Mo libres / ${mem_total:-?} Mo"
+echo "Ecrans  : 400x240 haut, 320x240 bas"

@@ -1,0 +1,21 @@
+#!/bin/sh
+# PID 1 : monte les systemes de fichiers virtuels, affiche fetch, lance un shell.
+mount -t proc proc /proc 2>/dev/null
+mount -t sysfs sysfs /sys 2>/dev/null
+mount -t devtmpfs devtmpfs /dev 2>/dev/null || mdev -s
+mkdir -p /dev/pts
+mount -t devpts devpts /dev/pts 2>/dev/null
+hostname alpine3ds 2>/dev/null
+
+export HOME=/root
+export TERM=linux
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+echo
+/usr/bin/fetch
+echo
+
+while true; do
+	/bin/sh -l
+	echo "[shell termine, relance]"
+done
