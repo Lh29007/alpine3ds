@@ -1,0 +1,64 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "logs/**"
+      - "**.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkitarm:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compiler alpine3ds (log capturé)
+        id: build
+        shell: bash
+        run: |
+          mkdir -p logs
+          set -o pipefail
+          make -j"$(nproc)" 2>&1 | tee logs/build.log
+
+      - name: Entête du log
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "=== alpine3ds build ==="
+            echo "commit  : ${GITHUB_SHA}"
+            echo "date    : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            echo "status  : ${{ steps.build.outcome }}"
+            echo "========================"
+            echo
+            cat logs/build.log 2>/dev/null || echo "(pas de log)"
+          } > logs/build-latest.log
+          rm -f logs/build.log
+          cat logs/build-latest.log
+
+      - name: Publier le log dans le dépôt
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f logs/build-latest.log
+          if git diff --cached --quiet; then
+            echo "Log inchangé."
+          else
+            git commit -m "ci: log de build ${GITHUB_SHA::7} [skip ci]"
+            git push origin HEAD:main
+          fi
+
+      - name: Archiver le .3dsx
+        if: steps.build.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: alpine3ds-3dsx
+          path: alpine3ds.3dsx
