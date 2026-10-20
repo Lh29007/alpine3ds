@@ -10,7 +10,6 @@ OUT="$ROOT/dist"
 ALPINE_MIRROR="https://dl-cdn.alpinelinux.org/alpine"
 ALPINE_BRANCH="v3.20"
 KERNEL_BASE="https://github.com/linux-3ds/linux/releases/download/latest"
-LOADER_API="https://api.github.com/repos/linux-3ds/firm_linux_loader/releases/latest"
 MAX_INITRD=$((8 * 1024 * 1024))   # zone initrd du loader : 0x27800000 -> 0x28000000
 
 rm -rf "$WORK" "$OUT"
@@ -50,15 +49,14 @@ for f in zImage nintendo3ds_ctr.dtb nintendo3ds_ktr.dtb; do
 	echo "ok : $f ($(stat -c%s "$WORK/$f") octets)"
 done
 
-echo "== 5. Loader firm_linux_loader (release latest) =="
-LOADER_URL=$(curl -fsSL "$LOADER_API" | jq -r '.assets[] | select(.name | endswith(".firm")) | .browser_download_url' | head -n 1)
-if [ -z "$LOADER_URL" ]; then
-	echo "ERREUR: aucun asset .firm dans la release firm_linux_loader"
-	curl -fsSL "$LOADER_API" | jq -r '.assets[].name' || true
-	exit 1
-fi
-echo "url : $LOADER_URL"
-curl -fsSL -o "$WORK/down_firm_linux_loader.firm" "$LOADER_URL"
+echo "== 5. Loader firm_linux_loader (compile depuis les sources) =="
+LOADER_SRC="$WORK/firm_linux_loader"
+git clone -q --depth 1 https://github.com/linux-3ds/firm_linux_loader "$LOADER_SRC"
+git -C "$LOADER_SRC" log --oneline -n 1
+make -C "$LOADER_SRC" CC=arm-none-eabi-gcc
+[ -f "$LOADER_SRC/firm_linux_loader.firm" ] || { echo "ERREUR: .firm non produit"; exit 1; }
+cp "$LOADER_SRC/firm_linux_loader.firm" "$WORK/down_firm_linux_loader.firm"
+echo "ok : firm_linux_loader.firm ($(stat -c%s "$WORK/down_firm_linux_loader.firm") octets)"
 
 echo "== 6. Arborescence SD =="
 SD="$WORK/sd"
