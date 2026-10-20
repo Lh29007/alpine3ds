@@ -1,0 +1,12 @@
+== 1. Alpine minirootfs armhf (v3.20) ==
+fichier : alpine-minirootfs-3.20.10-armhf.tar.gz
+== 2. Preparation du rootfs ==
+6.7M	/home/runner/work/alpine3ds/alpine3ds/work/rootfs
+== 3. initramfs.cpio.gz ==
+taille : 3211290 octets (max 8388608)
+== 4. Noyau linux-3ds (release latest) ==
+ok : zImage (3514232 octets)
+ok : nintendo3ds_ctr.dtb (8123 octets)
+ok : nintendo3ds_ktr.dtb (8207 octets)
+== 5. Loader firm_linux_loader (release latest) ==
+curl: (22) The requested URL returned error: 404
