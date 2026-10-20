@@ -3,10 +3,66 @@ fichier : alpine-minirootfs-3.20.10-armhf.tar.gz
 == 2. Preparation du rootfs ==
 6.7M	/home/runner/work/alpine3ds/alpine3ds/work/rootfs
 == 3. initramfs.cpio.gz ==
-taille : 3211290 octets (max 8388608)
+taille : 3203845 octets (max 8388608)
 == 4. Noyau linux-3ds (release latest) ==
 ok : zImage (3514232 octets)
 ok : nintendo3ds_ctr.dtb (8123 octets)
 ok : nintendo3ds_ktr.dtb (8207 octets)
-== 5. Loader firm_linux_loader (release latest) ==
-curl: (22) The requested URL returned error: 404
+== 5. Loader firm_linux_loader (compile depuis les sources) ==
+ecb0f0d Merge pull request #25 from linux-3ds/fix-n3ds-clocking
+make: Entering directory '/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader'
+make[1]: Entering directory '/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9'
+arm-none-eabi-gcc -mcpu=arm946e-s -march=armv5te -mlittle-endian -mthumb-interwork   -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/../common -MMD -MP -c source/cache.S -o source/cache.o
+arm-none-eabi-gcc -mcpu=arm946e-s -march=armv5te -mlittle-endian -mthumb-interwork   -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/../common -MMD -MP -c source/start.S -o source/start.o
+arm-none-eabi-gcc -mcpu=arm946e-s -march=armv5te -mlittle-endian -mthumb-interwork   -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/../common -MMD -MP -c source/fatfs/delay.S -o source/fatfs/delay.o
+arm-none-eabi-gcc -Wall -Os -fno-builtin -mcpu=arm946e-s -march=armv5te -mlittle-endian -mthumb-interwork  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/../common -fno-stack-protector -MMD -MP -c source/draw.c -o source/draw.o
+arm-none-eabi-gcc -Wall -Os -fno-builtin -mcpu=arm946e-s -march=armv5te -mlittle-endian -mthumb-interwork  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/../common -fno-stack-protector -MMD -MP -c source/fs.c -o source/fs.o
+arm-none-eabi-gcc -Wall -Os -fno-builtin -mcpu=arm946e-s -march=armv5te -mlittle-endian -mthumb-interwork  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/../common -fno-stack-protector -MMD -MP -c source/i2c.c -o source/i2c.o
+arm-none-eabi-gcc -Wall -Os -fno-builtin -mcpu=arm946e-s -march=armv5te -mlittle-endian -mthumb-interwork  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/../common -fno-stack-protector -MMD -MP -c source/main.c -o source/main.o
+arm-none-eabi-gcc -Wall -Os -fno-builtin -mcpu=arm946e-s -march=armv5te -mlittle-endian -mthumb-interwork  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/../common -fno-stack-protector -MMD -MP -c source/fatfs/diskio.c -o source/fatfs/diskio.o
+arm-none-eabi-gcc -Wall -Os -fno-builtin -mcpu=arm946e-s -march=armv5te -mlittle-endian -mthumb-interwork  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/../common -fno-stack-protector -MMD -MP -c source/fatfs/ff.c -o source/fatfs/ff.o
+arm-none-eabi-gcc -Wall -Os -fno-builtin -mcpu=arm946e-s -march=armv5te -mlittle-endian -mthumb-interwork  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9/../common -fno-stack-protector -MMD -MP -c source/fatfs/sdmmc.c -o source/fatfs/sdmmc.o
+arm-none-eabi-gcc -T link.ld -Wl,--nmagic source/cache.o source/start.o source/fatfs/delay.o source/draw.o source/fs.o source/i2c.o source/main.o source/fatfs/diskio.o source/fatfs/ff.o source/fatfs/sdmmc.o -o firm_linux_loader_arm9.elf -nostartfiles -specs=nano.specs -specs=nosys.specs
+/usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/bin/ld: /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/libc_nano.a(libc_a-closer.o): in function `_close_r':
+/build/newlib-38V0JC/newlib-4.4.0.20231231/build_nano/arm-none-eabi/newlib/../../../newlib/libc/reent/closer.c:47:(.text+0x18): warning: _close is not implemented and will always fail
+/usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/bin/ld: /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/libc_nano.a(libc_a-fstatr.o): in function `_fstat_r':
+/build/newlib-38V0JC/newlib-4.4.0.20231231/build_nano/arm-none-eabi/newlib/../../../newlib/libc/reent/fstatr.c:55:(.text+0x1c): warning: _fstat is not implemented and will always fail
+/usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/bin/ld: /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/libc_nano.a(libc_a-signalr.o): in function `_getpid_r':
+/build/newlib-38V0JC/newlib-4.4.0.20231231/build_nano/arm-none-eabi/newlib/../../../newlib/libc/reent/signalr.c:83:(.text+0x44): warning: _getpid is not implemented and will always fail
+/usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/bin/ld: /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/libc_nano.a(libc_a-isattyr.o): in function `_isatty_r':
+/build/newlib-38V0JC/newlib-4.4.0.20231231/build_nano/arm-none-eabi/newlib/../../../newlib/libc/reent/isattyr.c:52:(.text+0x18): warning: _isatty is not implemented and will always fail
+/usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/bin/ld: /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/libc_nano.a(libc_a-signalr.o): in function `_kill_r':
+/build/newlib-38V0JC/newlib-4.4.0.20231231/build_nano/arm-none-eabi/newlib/../../../newlib/libc/reent/signalr.c:53:(.text+0x1c): warning: _kill is not implemented and will always fail
+/usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/bin/ld: /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/libc_nano.a(libc_a-lseekr.o): in function `_lseek_r':
+/build/newlib-38V0JC/newlib-4.4.0.20231231/build_nano/arm-none-eabi/newlib/../../../newlib/libc/reent/lseekr.c:49:(.text+0x24): warning: _lseek is not implemented and will always fail
+/usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/bin/ld: /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/libc_nano.a(libc_a-readr.o): in function `_read_r':
+/build/newlib-38V0JC/newlib-4.4.0.20231231/build_nano/arm-none-eabi/newlib/../../../newlib/libc/reent/readr.c:49:(.text+0x24): warning: _read is not implemented and will always fail
+/usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/bin/ld: /usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/lib/libc_nano.a(libc_a-writer.o): in function `_write_r':
+/build/newlib-38V0JC/newlib-4.4.0.20231231/build_nano/arm-none-eabi/newlib/../../../newlib/libc/reent/writer.c:49:(.text+0x24): warning: _write is not implemented and will always fail
+make[1]: Leaving directory '/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm9'
+make[1]: Entering directory '/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm11'
+arm-none-eabi-gcc -mcpu=mpcore -march=armv6k -mlittle-endian -mthumb-interwork   -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm11/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm11/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm11/../common -MMD -MP -c source/start.S -o source/start.o
+arm-none-eabi-gcc -Wall -Os -fno-builtin -mcpu=mpcore -march=armv6k -mlittle-endian -mthumb-interwork  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm11/include  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm11/include/fatfs  -I/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm11/../common -fno-stack-protector -MMD -MP -c source/smp.c -o source/smp.o
+arm-none-eabi-gcc -T link.ld -Wl,--nmagic source/start.o source/smp.o -o firm_linux_loader_arm11.elf -nostartfiles
+make[1]: Leaving directory '/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader/arm11'
+firmtool build firm_linux_loader.firm -D arm9/firm_linux_loader_arm9.elf arm11/firm_linux_loader_arm11.elf -C NDMA XDMA -i
+make: Leaving directory '/home/runner/work/alpine3ds/alpine3ds/work/firm_linux_loader'
+ok : firm_linux_loader.firm (48128 octets)
+== 6. Arborescence SD ==
+/home/runner/work/alpine3ds/alpine3ds/work/sd
+/home/runner/work/alpine3ds/alpine3ds/work/sd/SD-README.txt
+/home/runner/work/alpine3ds/alpine3ds/work/sd/linux
+/home/runner/work/alpine3ds/alpine3ds/work/sd/linux/initramfs.cpio.gz
+/home/runner/work/alpine3ds/alpine3ds/work/sd/linux/nintendo3ds_ctr.dtb
+/home/runner/work/alpine3ds/alpine3ds/work/sd/linux/nintendo3ds_ktr.dtb
+/home/runner/work/alpine3ds/alpine3ds/work/sd/linux/zImage
+/home/runner/work/alpine3ds/alpine3ds/work/sd/luma
+/home/runner/work/alpine3ds/alpine3ds/work/sd/luma/payloads
+/home/runner/work/alpine3ds/alpine3ds/work/sd/luma/payloads/down_firm_linux_loader.firm
+== 7. Sorties ==
+total 9696
+drwxr-xr-x  2 root   root      4096 Oct 20 12:23 .
+drwxr-xr-x 10 runner runner    4096 Oct 20 12:23 ..
+-rw-r--r--  1 root   root   6710733 Oct 20 12:23 alpine3ds-sd.zip
+-rw-r--r--  1 root   root   3203845 Oct 20 12:23 initramfs.cpio.gz
+OK : bundle construit
