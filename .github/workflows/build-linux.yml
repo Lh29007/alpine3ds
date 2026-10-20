@@ -49,7 +49,16 @@ jobs:
           git add -f logs/linux-build.log
           if git diff --cached --quiet; then
             echo "Log inchange."
-          else
-            git commit -m "ci: log linux ${GITHUB_SHA::7} [skip ci]"
-            git push origin HEAD:main
+            exit 0
           fi
+          git commit -m "ci: log linux ${GITHUB_SHA::7} [skip ci]"
+          for i in 1 2 3 4 5; do
+            if git pull -q --rebase origin main && git push origin HEAD:main; then
+              echo "Log publie (tentative $i)."
+              exit 0
+            fi
+            echo "Push refuse, nouvelle tentative dans 5s..."
+            sleep 5
+          done
+          echo "ERREUR: impossible de publier le log"
+          exit 1
